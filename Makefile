@@ -66,7 +66,7 @@
 # Name of target controller 
 # (e.g. 'at90s8515', see the available avr-gcc mmcu 
 # options for possible values)
-MCU=atmega328p
+MCU=atmega168p
 
 # id to use with programmer
 # default: PROGRAMMER_MCU=$(MCU)
@@ -74,7 +74,7 @@ MCU=atmega328p
 # accept the same MCU name as avr-gcc (for example
 # for ATmega8s, avr-gcc expects 'atmega8' and 
 # avrdude requires 'm8')
-PROGRAMMER_MCU=m328p
+PROGRAMMER_MCU=m168p
 
 # Name of our project
 # (use a single word, e.g. 'myproject')
@@ -112,12 +112,7 @@ OPTLEVEL=3
 # one of the valid "-c PROGRAMMER-ID" values 
 # described in the avrdude info page.
 # 
-AVRDUDE_PROGRAMMERID=arduino
-
-# port--serial or parallel port to which your 
-# hardware programmer is attached
-#
-AVRDUDE_PORT=/dev/ttyACM0
+AVRDUDE_PROGRAMMERID=avrisp2
 
 
 ####################################################
@@ -227,7 +222,7 @@ hex: $(HEXTRG)
 
 writeflash: hex
 	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID)   \
-	 -p $(PROGRAMMER_MCU) -P $(AVRDUDE_PORT) -e        \
+	 -p $(PROGRAMMER_MCU) -e        \
 	 -U flash:w:$(HEXROMTRG)
 
 install: writeflash
@@ -292,10 +287,10 @@ gdbinit: $(GDBINITFILE)
 
 $(GDBINITFILE): $(TRG)
 	@echo "file $(TRG)" > $(GDBINITFILE)
-	
+
 	@echo "target remote localhost:1212" \
 		                >> $(GDBINITFILE)
-	
+
 	@echo "load"        >> $(GDBINITFILE) 
 	@echo "break main"  >> $(GDBINITFILE)
 	@echo "continue"    >> $(GDBINITFILE)
@@ -310,7 +305,7 @@ clean:
 	$(REMOVE) $(LST) $(GDBINITFILE)
 	$(REMOVE) $(GENASMFILES)
 	$(REMOVE) $(HEXTRG)
-	
+
 
 
 #####                    EOF                   #####
