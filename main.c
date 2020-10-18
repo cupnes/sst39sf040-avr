@@ -164,8 +164,6 @@ static inline void pgmB(__uint24 addr,uint8_t dat){
 	sendCmd(0x2AAA,0x55);
 	sendCmd(0x5555,0xA0);
 	sendCmd(addr,dat);
-	//This assumes a delay will follow the writing of the byte
-	serialWrB('N');
 }
 __attribute__((noreturn)) void main(void){
 	cli();
