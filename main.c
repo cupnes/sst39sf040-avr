@@ -200,7 +200,6 @@ __attribute__((noreturn)) void main(void){
 		__uint24 x;
 		for (x=0;x<capacity;++x){
 			pgmB(x,USART_Receive());
-			serialWrB(readB(x));
 		}
 	}else if(mode=='R')
 		ReadChip(capacity);
